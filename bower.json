@@ -1,19 +1,19 @@
 {
-  "name": "seed-element",
-  "version": "0.8.0",
+  "name": "iron-jsonp-library",
+  "version": "0.8.1",
   "authors": [
-    "Anonymous <anonymous@example.com>"
+    "Aleks Totic <a@totic.org>"
   ],
-  "description": "An element providing a solution to no problem in particular.",
+  "description": "Loads jsonp libraries",
   "keywords": [
     "web-component",
     "web-components",
     "polymer",
-    "seed"
+    "core-shared-library"
   ],
-  "main": "seed-element.html",
+  "main": "iron-jsonp-library.html",
   "license": "MIT",
-  "homepage": "https://github.com/<USERNAME>/seed-element/",
+  "homepage": "https://github.com/PolymerElements/iron-jsonp-library/",
   "ignore": [
     "/.*",
     "/test/",
@@ -23,7 +23,7 @@
     "polymer": "Polymer/polymer#v0.8.0-rc.7"
   },
   "devDependencies": {
-    "iron-doc-viewer": "PolymerElements/iron-doc-viewer#^0.8.6",
+    "iron-component-page": "PolymerElements/iron-component-page#^0.8.0",
     "web-component-tester": "*"
   }
 }

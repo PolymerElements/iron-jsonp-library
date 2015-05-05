@@ -13,7 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 (function() {
   "use strict";
   /**
-    `Polymer.IronJsonpLibraryBehavior` loads a shared jsonp library.
+    `Polymer.IronJsonpLibraryBehavior` loads a jsonp library.
     Multiple components can request same library, only one copy will load.
 
     Some libraries require a specific global function be defined.
@@ -45,16 +45,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       /**
        * @attribute libraryUrl
-       * url of the library to load. Must contain string '%%callback_name%%' if
-       * callbackName attribute is not specified.
-       * this string will be substituted with automatically generated callback name
-       * for loading
+       * url of the library to load. Must contain string '%%callback_name%%'
+       * This string will be substituted with automatically generated callback name
+       * for loading.
        * Ex: https://maps.googleapis.com/maps/api/js?callback=%%callback%%
        */
       /**
        * @attribute callbackName
        * specify this attribute if library requires specific callback name.
-       * Otherwise, specify '%%callback_name%%' inside libraryUrl
        */
       /**
        * @attribute notifyEvent
@@ -196,8 +194,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </script>
 
 <!--
-  An element to load an arbitrary jsonp library.
-  Just a wrapper for Polymer.IronJsonpLibraryBehavior
+  Loads specified jsonp library.
+
+  Example:
+
+    <iron-jsonp-library
+      library-url="https://apis.google.com/js/plusone.js?onload=%%callback%%"
+      notify-event="api-load"
+      library-loaded="{{loaded}}"></iron-jsonp-library>
+
+  Will emit 'api-load' event when loaded, and set 'loaded' to true
+
+  Implemented by  Polymer.IronJsonpLibraryBehavior. Use it
+  to create specific library loader elements.
+
 -->
 <script>
   Polymer({

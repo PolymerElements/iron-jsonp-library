@@ -19,33 +19,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <body>
 
     <p>An example of <code>&lt;iron-jsonp-library&gt;</code>:</p>
-    <template is="x-autobind">
+    <template is="dom-bind">
       <p>Google plus API loader</p>
       <iron-jsonp-library
         library-url="https://apis.google.com/js/plusone.js?onload=%%callback%%"
         notify-event="api-load"
         library-loaded="{{loaded}}"
         library-error-message="{{errorMessage}}"></iron-jsonp-library>
-      <template is="x-if" if="{{loaded}}">
+      <template is="dom-if" if="{{loaded}}">
         <p>Library has been loaded</p>
       </template>
-      <template is="x-if" if="{{!loaded}}">
+      <template is="dom-if" if="{{!loaded}}">
         <p>Library is loading</p>
       </template>
       <p>{{errorMessage}}</p>
     </template>
     <hr>
-    <template is="x-autobind">
+    <template is="dom-bind">
       <p>Bad loader</p>
       <iron-jsonp-library
         library-url="https://badapis.google.com/js/plusone.js?onload=%%callback%%"
         notify-event="api-load"
         library-loaded="{{loaded}}"
         library-error-message="{{errorMessage}}"></iron-jsonp-library>
-      <template is="x-if" if="{{loaded}}">
+      <template is="dom-if" if="{{loaded}}">
         <p>Library has been loaded</p>
       </template>
-      <template is="x-if" if="{{!loaded}}">
+      <template is="dom-if" if="{{!loaded}}">
         <p>Library is loading</p>
       </template>
       <p>{{errorMessage}}</p>

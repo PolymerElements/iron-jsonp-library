@@ -1,12 +1,11 @@
 {
   "name": "iron-jsonp-library",
-  "version": "0.9.0",
-  "description": "Loads an external library",
+  "version": "0.9.1",
+  "description": "Loads jsonp libraries",
   "authors": [
     "Aleks Totic <a@totic.org>",
     "The Polymer Authors"
   ],
-  "description": "Loads jsonp libraries",
   "keywords": [
     "web-component",
     "web-components",

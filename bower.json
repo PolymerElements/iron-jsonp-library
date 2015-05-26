@@ -8,9 +8,8 @@
   ],
   "keywords": [
     "web-component",
-    "web-components",
     "polymer",
-    "core-shared-library"
+    "behavior"
   ],
   "main": "iron-jsonp-library.html",
   "license": "MIT",

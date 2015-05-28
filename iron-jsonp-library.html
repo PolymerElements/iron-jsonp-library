@@ -22,7 +22,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     You should use an HTML Import to load library dependencies
     when possible instead of using this element.
 
-    @demo demo/index.html
     @hero hero.svg
     @polymerBehavior
    */
@@ -74,7 +73,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _libraryLoadCallback: function(err, result) {
       if (err) {
-        console.error("Library load failed:", err.message);
+        console.warn("Library load failed:", err.message);
         this._setLibraryErrorMessage(err.message);
       }
       else {
@@ -218,6 +217,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   Implemented by  Polymer.IronJsonpLibraryBehavior. Use it
   to create specific library loader elements.
 
+  @demo
 -->
 <script>
   Polymer({

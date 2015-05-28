@@ -12,7 +12,7 @@
     "behavior"
   ],
   "main": "iron-jsonp-library.html",
-  "license": "MIT",
+  "license": "http://polymer.github.io/LICENSE.txt",
   "homepage": "https://github.com/PolymerElements/iron-jsonp-library/",
   "ignore": [
     "/.*",

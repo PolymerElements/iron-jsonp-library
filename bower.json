@@ -11,6 +11,10 @@
     "polymer",
     "behavior"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PolymerElements/iron-jsonp-library.git"
+  },
   "main": "iron-jsonp-library.html",
   "license": "http://polymer.github.io/LICENSE.txt",
   "homepage": "https://github.com/PolymerElements/iron-jsonp-library/",

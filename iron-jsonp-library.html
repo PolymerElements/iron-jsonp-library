@@ -95,6 +95,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     ready: function() {
+      if ( this.auto ) {
+        this._loadLibrary();
+      }
+    },
+    
+    generateRequest: function () {
       this._loadLibrary();
     }
   };
@@ -245,14 +251,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /**
        * event with name specified in 'notifyEvent' attribute
        * will fire upon successful load
-       */
-      notifyEvent: String
-      /**
-       * event with name specified in 'notifyEvent' attribute
-       * will fire upon successful load
        * @event `notifyEvent`
        */
-
+      notifyEvent: String,
+      /**
+       * Set if the library should load right away or not
+       */
+       auto: Object
     }
   });
 

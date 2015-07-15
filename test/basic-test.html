@@ -55,6 +55,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           assert.isNotNull(badlibcallback.libraryErrorMessage);
         });
 
+        test('works with document.createElement', function() {
+          var lib = document.createElement('iron-jsonp-library');
+          lib.notifyEvent = 'api-load';
+          lib.libraryUrl =
+              "https://apis.google.com/js/plusone.js?onload=%%callback%%";
+          lib.addEventListener('api-load', function() {
+            assertEqual(lib.libraryLoaded, true);
+            done();
+          });
+        });
+
       });
     </script>
 

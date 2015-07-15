@@ -87,15 +87,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     /** loads the library, and fires this.notifyEvent upon completion */
     _loadLibrary: function() {
-      LoaderMap.require(
-        this.libraryUrl,
-        this._libraryLoadCallback.bind(this),
-        this.callbackName
-      );
-    },
-
-    ready: function() {
-      this._loadLibrary();
+      if (this.libraryUrl) {
+        LoaderMap.require(
+          this.libraryUrl,
+          this._libraryLoadCallback.bind(this),
+          this.callbackName
+        );
+      }
     }
   };
 
@@ -236,7 +234,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        *
        * Ex: https://maps.googleapis.com/maps/api/js?callback=%%callback%%
        */
-      libraryUrl: String,
+      libraryUrl: {
+        type: String,
+        value: '',
+        observer: '_loadLibrary'
+      },
       /**
        * Set if library requires specific callback name.
        * Name will be automatically generated if not set.

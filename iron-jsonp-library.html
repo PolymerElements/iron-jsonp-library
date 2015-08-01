@@ -78,7 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _libraryUrlChanged: function(libraryUrl) {
       // can't load before ready because notifyEvent might not be set
-      if (this._isReady && this.libraryUrl)
+      if (this._isAttached && this.libraryUrl)
         this._loadLibrary();
     },
 
@@ -104,10 +104,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       );
     },
 
-    ready: function() {
-      this._isReady = true;
+    attached: function() {
+      this._isAttached = true;
       if (this.libraryUrl)
         this._loadLibrary();
+    },
+
+    detatched: function() {
+      this._isAttached = false;
     }
   };
 

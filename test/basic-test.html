@@ -16,43 +16,60 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
 
+    <link rel="import" href="../../promise-polyfill/promise-polyfill-lite.html">
     <!-- Step 1: import the element to test -->
     <link rel="import" href="../iron-jsonp-library.html">
   </head>
   <body>
-    <iron-jsonp-library id="plusone"
-      library-url="https://apis.google.com/js/plusone.js?onload=%%callback%%"
-      notify-event="api-load"></iron-jsonp-library>
-    <iron-jsonp-library id="badliburl"
-      library-url="https://badapis.google.com/js/plusone.js?onload=%%callback%%"
-      notify-event="api-load"></iron-jsonp-library>
-    <iron-jsonp-library id="badlibcallback"
-      library-url="https://apis.google.com/"
-      notify-event="api-load"></iron-jsonp-library>
-
     <script>
-      var goodLib = document.querySelector('#plusone');
-      var badliburl = document.querySelector('#badliburl');
-      var badlibcallback = document.querySelector('#badlibcallback');
+
+      function libToPromise(lib) {
+        lib.notifyEvent = lib.notifyEvent || 'api-load';
+        var promise = new Promise(function(resolve, reject) {
+          lib.addEventListener(lib.notifyEvent, resolve);
+          lib.addEventListener('library-error-message-changed', function(e) {
+            reject(e.detail.value)
+          });
+        });
+        document.body.appendChild(lib);
+        return promise;
+      }
 
       suite('<iron-jsonp-library>', function() {
 
-        test('good library loads', function(done) {
-          goodLib.addEventListener('api-load', function() {
-            assert.equal(goodLib.libraryLoaded, true);
-            done();
-          });
+        test('good library loads', function() {
+          var lib = document.createElement('iron-jsonp-library');
+          lib.libraryUrl = 'https://apis.google.com/js/plusone.js' +
+              '?onload=%%callback%%';
+          return libToPromise(lib).then(function() {
+            // Ensure that we can load the same library twice.
+            // TODO: assert that only one network request is made.
+            var lib2 = document.createElement('iron-jsonp-library');
+            lib2.libraryUrl = lib.libraryUrl
+            return libToPromise(lib2);
+          })
         });
 
         test('bad library dns fails to load', function() {
-          badliburl.addEventListener('libraryErrorMessage-changed', function() {
-            assert.isNotNull(badliburl.libraryErrorMessage);
-            done();
+          var badLib = document.createElement('iron-jsonp-library');
+          badLib.libraryUrl = 'https://badapis.google.com/js/plusone.js' +
+              '?onload=%%callback%%';
+          return libToPromise(badLib).then(function() {
+            throw new Error('Library with bad URL should not succeed');
+          }, function(errMessage) {
+            assert.isNotNull(errMessage);
           });
         });
 
         test('libraryurl mising %%callback%%', function() {
-          assert.isNotNull(badlibcallback.libraryErrorMessage);
+          var badLib = document.createElement('iron-jsonp-library');
+          badLib.libraryUrl = 'https://apis.google.com/js/plusone.js';
+          return libToPromise(badLib).then(function() {
+            throw new Error('Library with no callback should not succeed');
+          }, function(errMessage) {
+            assert.match(
+                errMessage, /a %%callback_name%% parameter is required/);
+          })
         });
 
       });

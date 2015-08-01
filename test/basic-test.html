@@ -20,39 +20,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" href="../iron-jsonp-library.html">
   </head>
   <body>
-    <iron-jsonp-library id="plusone"
-      library-url="https://apis.google.com/js/plusone.js?onload=%%callback%%"
-      notify-event="api-load"></iron-jsonp-library>
-    <iron-jsonp-library id="badliburl"
-      library-url="https://badapis.google.com/js/plusone.js?onload=%%callback%%"
-      notify-event="api-load"></iron-jsonp-library>
-    <iron-jsonp-library id="badlibcallback"
-      library-url="https://apis.google.com/"
-      notify-event="api-load"></iron-jsonp-library>
-
     <script>
-      var goodLib = document.querySelector('#plusone');
-      var badliburl = document.querySelector('#badliburl');
-      var badlibcallback = document.querySelector('#badlibcallback');
 
       suite('<iron-jsonp-library>', function() {
 
         test('good library loads', function(done) {
+          var goodLib = document.createElement('iron-jsonp-library');
+          goodLib.libraryUrl = 'https://apis.google.com/js/plusone.js' +
+              '?onload=%%callback%%';
+          goodLib.notifyEvent = 'api-load';
           goodLib.addEventListener('api-load', function() {
             assert.equal(goodLib.libraryLoaded, true);
             done();
           });
+          document.body.appendChild(goodLib);
         });
 
-        test('bad library dns fails to load', function() {
-          badliburl.addEventListener('libraryErrorMessage-changed', function() {
-            assert.isNotNull(badliburl.libraryErrorMessage);
+        test('bad library dns fails to load', function(done) {
+          var badLib = document.createElement('iron-jsonp-library');
+          badLib.libraryUrl = 'https://badapis.google.com/js/plusone.js' +
+              '?onload=%%callback%%';
+          badLib.notifyEvent = 'api-load';
+          badLib.addEventListener('library-error-message-changed', function() {
+            assert.isNotNull(badLib.libraryErrorMessage);
             done();
           });
+          document.body.appendChild(badLib);
         });
 
-        test('libraryurl mising %%callback%%', function() {
-          assert.isNotNull(badlibcallback.libraryErrorMessage);
+        test('libraryurl mising %%callback%%', function(done) {
+          var badLib = document.createElement('iron-jsonp-library');
+          badLib.libraryUrl = 'https://apis.google.com/js/plusone.js';
+          badLib.notifyEvent = 'api-load';
+          badLib.addEventListener('library-error-message-changed', function() {
+            assert.isNotNull(badLib.libraryErrorMessage);
+            done();
+          });
+          document.body.appendChild(badLib);
         });
 
       });

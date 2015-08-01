@@ -72,6 +72,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        */
     },
 
+    observers: [
+      '_libraryUrlChanged(libraryUrl)'
+    ],
+
+    _libraryUrlChanged: function(libraryUrl) {
+      // can't load before ready because notifyEvent might not be set
+      if (this._isAttached && this.libraryUrl)
+        this._loadLibrary();
+    },
+
     _libraryLoadCallback: function(err, result) {
       if (err) {
         console.warn("Library load failed:", err.message);
@@ -81,7 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this._setLibraryErrorMessage(null);
         this._setLibraryLoaded(true);
         if (this.notifyEvent)
-          this.fire( this.notifyEvent, result);
+          this.fire(this.notifyEvent, result);
       }
     },
 
@@ -95,7 +105,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     attached: function() {
-      this._loadLibrary();
+      this._isAttached = true;
+      if (this.libraryUrl)
+        this._loadLibrary();
+    },
+
+    detatched: function() {
+      this._isAttached = false;
     }
   };
 

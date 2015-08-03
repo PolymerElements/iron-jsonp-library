@@ -15,44 +15,70 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
-
-    <!-- Step 1: import the element to test -->
+    <script src="../../test-fixture/test-fixture-mocha.js"></script>
+    <link rel="import" href="../../test-fixture/test-fixture.html">
     <link rel="import" href="../iron-jsonp-library.html">
+
   </head>
   <body>
-    <iron-jsonp-library id="plusone"
-      library-url="https://apis.google.com/js/plusone.js?onload=%%callback%%"
-      notify-event="api-load"></iron-jsonp-library>
-    <iron-jsonp-library id="badliburl"
-      library-url="https://badapis.google.com/js/plusone.js?onload=%%callback%%"
-      notify-event="api-load"></iron-jsonp-library>
-    <iron-jsonp-library id="badlibcallback"
-      library-url="https://apis.google.com/"
-      notify-event="api-load"></iron-jsonp-library>
+    <test-fixture id="jsonp-fixture">
+      <template is="dom-template">
+        <iron-jsonp-library id="jsonp"
+          library-url="{{libraryUrl}}"
+          notify-event="api-load"></iron-jsonp-library>
+      </template>
+    </test-fixture>
 
     <script>
-      var goodLib = document.querySelector('#plusone');
-      var badliburl = document.querySelector('#badliburl');
-      var badlibcallback = document.querySelector('#badlibcallback');
 
       suite('<iron-jsonp-library>', function() {
 
         test('good library loads', function(done) {
-          goodLib.addEventListener('api-load', function() {
-            assert.equal(goodLib.libraryLoaded, true);
-            done();
-          });
+          var jsonp = fixture('jsonp-fixture');
+          jsonp.addEventListener('api-load', function() {
+              // Ensure that we can load the same library twice.
+              // TODO: assert that only one network request is made.
+              var second = document.createElement('iron-jsonp-library');
+              second.notifyEvent = 'api-load';
+              second.addEventListener('api-load', function() { done() });
+              second.addEventListener('library-error-message-changed', function() { done('second attempt fails')});
+              second.libraryUrl = "https://apis.google.com/js/plusone.js?onload=%%callback%%";
+            }
+          );
+          jsonp.addEventListener('library-error-message-changed', function() {
+              done('library did not load');
+            }
+          );
+          jsonp.libraryUrl = "https://apis.google.com/js/plusone.js?onload=%%callback%%";
+
         });
 
-        test('bad library dns fails to load', function() {
-          badliburl.addEventListener('libraryErrorMessage-changed', function() {
-            assert.isNotNull(badliburl.libraryErrorMessage);
-            done();
-          });
+        test('bad library dns fails to load', function(done) {
+          var jsonp = fixture('jsonp-fixture');
+          jsonp.addEventListener('api-load', function() {
+              done('bad dns somehow loaded?');
+            }
+          );
+          jsonp.addEventListener('library-error-message-changed', function() {
+              assert.isNotNull(jsonp.libraryErrorMessage);
+              done();
+            }
+          );
+          jsonp.libraryUrl = "https://badapis.google.com/js/plusone.js?onload=%%callback%%";
         });
 
-        test('libraryurl mising %%callback%%', function() {
-          assert.isNotNull(badlibcallback.libraryErrorMessage);
+        test('libraryurl mising %%callback%%', function(done) {
+          var jsonp = fixture('jsonp-fixture');
+          jsonp.addEventListener('api-load', function() {
+              done('no callback somehow loaded?');
+            }
+          );
+          jsonp.addEventListener('library-error-message-changed', function() {
+              assert.isNotNull(jsonp.libraryErrorMessage);
+              done();
+            }
+          );
+          jsonp.libraryUrl = "https://apis.google.com/js/plusone.js?onload";
         });
 
       });

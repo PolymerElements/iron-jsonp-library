@@ -9,6 +9,8 @@ Edit this file, and the bot will squash your changes :)
 
 -->
 
+[![Build Status](https://travis-ci.org/PolymerElements/iron-jsonp-library.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-jsonp-library)
+
 _[Demo and API Docs](https://elements.polymer-project.org/elements/iron-jsonp-library)_
 
 

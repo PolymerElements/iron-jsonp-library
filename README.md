@@ -12,9 +12,9 @@ thing! https://github.com/PolymerLabs/tedium/issues
 
 -->
 
-[![Build Status](https://travis-ci.org/PolymerElements/iron-jsonp-library.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-jsonp-library)
+[![Build status](https://travis-ci.org/PolymerElements/iron-jsonp-library.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-jsonp-library)
 
-_[Demo and API Docs](https://elements.polymer-project.org/elements/iron-jsonp-library)_
+_[Demo and API docs](https://elements.polymer-project.org/elements/iron-jsonp-library)_
 
 
 ##&lt;iron-jsonp-library&gt;

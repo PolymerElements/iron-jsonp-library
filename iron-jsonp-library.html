@@ -84,7 +84,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _libraryLoadCallback: function(err, result) {
       if (err) {
-        console.warn("Library load failed:", err.message);
+        Polymer.Base._warn("Library load failed:", err.message);
         this._setLibraryErrorMessage(err.message);
       }
       else {

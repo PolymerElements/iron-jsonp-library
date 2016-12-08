@@ -1,15 +1,12 @@
 language: node_js
 sudo: required
 before_script:
-  - npm install -g bower polylint web-component-tester
-  - bower install
-  - polylint
+  - npm install -g bower polymer-cli
+  - polymer install --variants
 env:
   global:
-    - secure: >-
-        mE+VoHn/CEcMhTtOKUtE4xvs9KDWfFARTgAyGTsyWV/sx1kYuBA9nh7S+plYyIPgKYQ05tO8SVBQ8e0fwDMe6FahqUlk28VL2vfAwX/4pRfnFdcLuYGydCgbmxq8GFAdsPgepsEGMSe2JN982FtlxmJknU/DbTol7wvk+PXbFbs=
-    - secure: >-
-        eklVX5hYzqnn+pBHivbV92qrenLTRlYqgoq880jHd2+Y1G8OVVTDeR6HoBZ/MppMk5AvXZYRJZqy8Cxjjvk5MneTplWWw6ULEgAL7Qbz/8Z+ueV/53uISpy8IeFJZUydDHlFeka+bIEx09fIQQ5GJs+f0P3prT10Jup1DxBaSIk=
+    - secure: mE+VoHn/CEcMhTtOKUtE4xvs9KDWfFARTgAyGTsyWV/sx1kYuBA9nh7S+plYyIPgKYQ05tO8SVBQ8e0fwDMe6FahqUlk28VL2vfAwX/4pRfnFdcLuYGydCgbmxq8GFAdsPgepsEGMSe2JN982FtlxmJknU/DbTol7wvk+PXbFbs=
+    - secure: eklVX5hYzqnn+pBHivbV92qrenLTRlYqgoq880jHd2+Y1G8OVVTDeR6HoBZ/MppMk5AvXZYRJZqy8Cxjjvk5MneTplWWw6ULEgAL7Qbz/8Z+ueV/53uISpy8IeFJZUydDHlFeka+bIEx09fIQQ5GJs+f0P3prT10Jup1DxBaSIk=
 node_js: '6'
 addons:
   firefox: latest
@@ -19,6 +16,6 @@ addons:
     packages:
       - google-chrome-stable
 script:
-  - xvfb-run wct
-  - 'if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct -s ''default''; fi'
+  - xvfb-run polymer test
+  - 'if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then polymer test -s ''default''; fi'
 dist: trusty

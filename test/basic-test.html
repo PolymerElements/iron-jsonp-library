@@ -20,10 +20,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </head>
   <body>
     <test-fixture id="jsonp-fixture">
-      <template is="dom-template">
+      <template>
         <iron-jsonp-library id="jsonp"
-          library-url="{{libraryUrl}}"
           notify-event="api-load"></iron-jsonp-library>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="second-fixture">
+      <template>
+        <iron-jsonp-library id="jsonp"></iron-jsonp-library>
       </template>
     </test-fixture>
 
@@ -36,19 +41,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           jsonp.addEventListener('api-load', function() {
               // Ensure that we can load the same library twice.
               // TODO: assert that only one network request is made.
-              var second = document.createElement('iron-jsonp-library');
+              var second = fixture('second-fixture');
               second.notifyEvent = 'api-load';
               second.addEventListener('api-load', function() { done() });
-              second.addEventListener('library-error-message-changed', function() { done('second attempt fails')});
+              second.addEventListener('library-error-message-changed', function() {
+                // Polymer 2 setting via this._setPropertyName() fires a change evt
+                if (second.libraryErrorMessage) {
+                  done('second attempt fails')
+                }
+              });
               second.libraryUrl = "https://apis.google.com/js/plusone.js?onload=%%callback%%";
             }
           );
           jsonp.addEventListener('library-error-message-changed', function() {
+            // Polymer 2 setting via this._setPropertyName() fires a change evt
+            if (jsonp.libraryErrorMessage) {
               done('library did not load');
             }
-          );
+          });
           jsonp.libraryUrl = "https://apis.google.com/js/plusone.js?onload=%%callback%%";
-
         });
 
         test('bad library dns fails to load', function(done) {

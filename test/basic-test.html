@@ -47,7 +47,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               second.addEventListener('library-error-message-changed', function() {
                 // Polymer 2 setting via this._setPropertyName() fires a change evt
                 if (second.libraryErrorMessage) {
-                  done('second attempt fails')
+                  done('second attempt fails');
                 }
               });
               second.libraryUrl = "https://apis.google.com/js/plusone.js?onload=%%callback%%";

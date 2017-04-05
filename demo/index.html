@@ -118,10 +118,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // kick off delayed loader by setting libraryUrl
       window.setTimeout(function() {
         var t = document.querySelector('#delayedLoader');
-        // value is set on template in Polymer 1.x
-        t.libraryUrl = 'https://apis.google.com/js/drive-realtime.js?onload=%%callback%%';
-        // value is set on the dom-bind in 2.x
-        t.parentNode.libraryUrl = t.libraryUrl;
+
+        if (Polymer.Element) {
+          // value is set on the dom-bind in 2.x
+          t.parentNode.libraryUrl = 'https://apis.google.com/js/drive-realtime.js?onload=%%callback%%';
+        } else {
+          // value is set on template in Polymer 1.x
+          t.libraryUrl = 'https://apis.google.com/js/drive-realtime.js?onload=%%callback%%';
+        }
       },
       1000);
     </script>

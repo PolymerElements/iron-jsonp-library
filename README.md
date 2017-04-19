@@ -17,7 +17,7 @@ thing! https://github.com/PolymerLabs/tedium/issues
 _[Demo and API docs](https://elements.polymer-project.org/elements/iron-jsonp-library)_
 
 
-##&lt;iron-jsonp-library&gt;
+## &lt;iron-jsonp-library&gt;
 
 Loads specified jsonp library.
 
@@ -37,7 +37,7 @@ to create specific library loader elements.
 
 
 
-##Polymer.IronJsonpLibraryBehavior
+## Polymer.IronJsonpLibraryBehavior
 
 `Polymer.IronJsonpLibraryBehavior` loads a jsonp library.
 Multiple components can request same library, only one copy will load.

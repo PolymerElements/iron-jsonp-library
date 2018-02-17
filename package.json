@@ -1,0 +1,10 @@
+{
+  "name": "@polymer/iron-jsonp-library",
+  "private": true,
+  "description": "Loads jsonp libraries",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PolymerElements/iron-jsonp-library.git"
+  },
+  "license": "BSD-3-Clause"
+}

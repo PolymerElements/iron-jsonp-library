@@ -13,11 +13,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>iron-jsonp-library Demo</title>
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../../paper-styles/color.html">
-    <link rel="import" href="../../paper-styles/demo-pages.html">
-    <link rel="import" href="../../paper-spinner/paper-spinner.html">
-    <link rel="import" href="../iron-jsonp-library.html">
+    <script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script type="module" src="../../paper-styles/color.js"></script>
+    <script type="module" src="../../paper-styles/demo-pages.js"></script>
+    <script type="module" src="../../paper-spinner/paper-spinner.js"></script>
+    <script type="module" src="../iron-jsonp-library.js"></script>
     <style is="custom-style">
 
       .loading {
@@ -114,21 +114,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </div>
 
-    <script>
-      // kick off delayed loader by setting libraryUrl
-      window.setTimeout(function() {
-        var t = document.querySelector('#delayedLoader');
+    <script type="module">
+import '@polymer/paper-styles/color.js';
+import '@polymer/paper-styles/demo-pages.js';
+import '@polymer/paper-spinner/paper-spinner.js';
+import '../iron-jsonp-library.js';
+import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+// kick off delayed loader by setting libraryUrl
+window.setTimeout(function() {
+  var t = document.querySelector('#delayedLoader');
 
-        if (Polymer.Element) {
-          // value is set on the dom-bind in 2.x
-          t.parentNode.libraryUrl =
-              'https://apis.google.com/js/drive-realtime.js?onload=%%callback%%';
-        } else {
-          // value is set on template in Polymer 1.x
-          t.libraryUrl =
-              'https://apis.google.com/js/drive-realtime.js?onload=%%callback%%';
-        }
-      }, 1000);
-    </script>
+  if (PolymerElement) {
+    // value is set on the dom-bind in 2.x
+    t.parentNode.libraryUrl =
+        'https://apis.google.com/js/drive-realtime.js?onload=%%callback%%';
+  } else {
+    // value is set on template in Polymer 1.x
+    t.libraryUrl =
+        'https://apis.google.com/js/drive-realtime.js?onload=%%callback%%';
+  }
+}, 1000);
+</script>
   </body>
 </html>

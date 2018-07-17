@@ -13,13 +13,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>iron-jsonp-library Demo</title>
-    <script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script type="module" src="../../paper-styles/color.js"></script>
-    <script type="module" src="../../paper-styles/demo-pages.js"></script>
-    <script type="module" src="../../paper-spinner/paper-spinner.js"></script>
-    <script type="module" src="../iron-jsonp-library.js"></script>
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2.0.0/webcomponents-loader.js"></script>
     <style is="custom-style">
-
       .loading {
         color: var(--google-grey-500);
       }
@@ -48,10 +43,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <template is="dom-bind">
           <h3>Good loader</h3>
           <iron-jsonp-library
-            library-url="https://apis.google.com/js/plusone.js?onload=%%callback%%"
-            notify-event="api-load"
-            library-loaded="{{loaded}}"
-            library-error-message="{{errorMessage}}"></iron-jsonp-library>
+              library-url="https://apis.google.com/js/plusone.js?onload=%%callback%%"
+              notify-event="api-load"
+              library-loaded="{{loaded}}"
+              library-error-message="{{errorMessage}}">
+          </iron-jsonp-library>
           <template is="dom-if" if="{{loaded}}">
             <p class="success">The <code>Google+ API</code> has been loaded</p>
           </template>
@@ -71,10 +67,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <template is="dom-bind">
           <h3>Bad loader</h3>
           <iron-jsonp-library
-            library-url="https://badapis.google.com/js/plusone.js?onload=%%callback%%"
-            notify-event="api-load"
-            library-loaded="{{loaded}}"
-            library-error-message="{{errorMessage}}"></iron-jsonp-library>
+              library-url="https://badapis.google.com/js/plusone.js?onload=%%callback%%"
+              notify-event="api-load"
+              library-loaded="{{loaded}}"
+              library-error-message="{{errorMessage}}">
+          </iron-jsonp-library>
           <template is="dom-if" if="{{loaded}}">
             <p><code>badapis</code> has been loaded</p>
           </template>
@@ -90,13 +87,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </dom-bind>
 
       <hr>
-      <dom-bind>
+      <dom-bind id="delayedLoader">
         <template is="dom-bind" id="delayedLoader">
           <h3>Delayed libraryUrl loader</h3>
           <iron-jsonp-library
-            library-url="{{libraryUrl}}"
-            library-loaded="{{loaded}}"
-            library-error-message="{{errorMessage}}">
+              library-url="{{libraryUrl}}"
+              library-loaded="{{loaded}}"
+              library-error-message="{{errorMessage}}">
           </iron-jsonp-library>
           <template is="dom-if" if="{{loaded}}">
             <p><code>{{libraryUrl}}</code> has been loaded</p>
@@ -111,29 +108,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </template>
         </template>
       </dom-bind>
-
     </div>
 
     <script type="module">
-import '@polymer/paper-styles/color.js';
-import '@polymer/paper-styles/demo-pages.js';
-import '@polymer/paper-spinner/paper-spinner.js';
-import '../iron-jsonp-library.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-// kick off delayed loader by setting libraryUrl
-window.setTimeout(function() {
-  var t = document.querySelector('#delayedLoader');
-
-  if (PolymerElement) {
-    // value is set on the dom-bind in 2.x
-    t.parentNode.libraryUrl =
-        'https://apis.google.com/js/drive-realtime.js?onload=%%callback%%';
-  } else {
-    // value is set on template in Polymer 1.x
-    t.libraryUrl =
-        'https://apis.google.com/js/drive-realtime.js?onload=%%callback%%';
-  }
-}, 1000);
-</script>
+      import '@polymer/paper-styles/color.js';
+      import '@polymer/paper-styles/demo-pages.js';
+      import '@polymer/paper-spinner/paper-spinner.js';
+      import '../iron-jsonp-library.js';
+      import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+      // kick off delayed loader by setting libraryUrl
+      window.setTimeout(function() {
+        document.querySelector('#delayedLoader').libraryUrl =
+            'https://apis.google.com/js/drive-realtime.js?onload=%%callback%%';
+      }, 1000);
+    </script>
   </body>
 </html>

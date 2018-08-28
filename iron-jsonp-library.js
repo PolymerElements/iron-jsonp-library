@@ -106,17 +106,17 @@ export const IronJsonpLibraryBehavior = {
   }
 };
 
-/**
- * LoaderMap keeps track of all Loaders
- */
-var LoaderMap = {
-  apiMap: {},  // { hash -> Loader }
+class LoaderMapClass {
+  constructor() {
+    this.apiMap = {};  // { hash -> Loader }
+  }
 
   /**
+   * @param {string} url .
    * @param {Function} notifyCallback loaded callback fn(result)
    * @param {string} jsonpCallbackName name of jsonpcallback. If API does not provide it, leave empty. Optional.
    */
-  require: function(url, notifyCallback, jsonpCallbackName) {
+  require(url, notifyCallback, jsonpCallbackName) {
     // make hashable string form url
     var name = this.nameFromUrl(url);
 
@@ -126,12 +126,21 @@ var LoaderMap = {
 
     // ask for notification
     this.apiMap[name].requestNotify(notifyCallback);
-  },
+  }
 
-  nameFromUrl: function(url) {
+  /**
+   * @param {string} url
+   * @return {string}
+   */
+  nameFromUrl(url) {
     return url.replace(/[\:\/\%\?\&\.\=\-\,]/g, '_') + '_api';
   }
-};
+}
+
+/**
+ * LoaderMap keeps track of all Loaders
+ */
+var LoaderMap = new LoaderMapClass();
 
 /** @constructor */
 var Loader = function(name, url, callbackName) {

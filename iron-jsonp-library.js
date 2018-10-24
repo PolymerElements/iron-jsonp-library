@@ -228,6 +228,7 @@ Loader.prototype = {
 Polymer({
 
   is: 'iron-jsonp-library',
+  _template: null,
 
   behaviors: [IronJsonpLibraryBehavior],
 

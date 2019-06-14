@@ -39,6 +39,7 @@ export const IronJsonpLibraryBehavior = {
     },
     /**
      * Not null if library has failed to load
+     * @type {String|null}
      */
     libraryErrorMessage: {
       type: String,

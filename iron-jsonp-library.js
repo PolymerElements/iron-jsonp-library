@@ -21,7 +21,6 @@ import {Base} from '@polymer/polymer/polymer-legacy.js';
  * You should use an HTML Import to load library dependencies
  * when possible instead of using this element.
  *
- * @hero hero.svg
  * @demo demo/index.html
  * @polymerBehavior
  */
@@ -100,6 +99,7 @@ export const IronJsonpLibraryBehavior = {
         this.callbackName);
   },
 
+  /** @override */
   ready: function() {
     this._isReady = true;
     if (this.libraryUrl)
@@ -229,6 +229,7 @@ Loader.prototype = {
 Polymer({
 
   is: 'iron-jsonp-library',
+  /** @override */
   _template: null,
 
   behaviors: [IronJsonpLibraryBehavior],
